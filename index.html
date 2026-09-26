@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mocha Games</title>
+<meta name="description" content="Mocha Games is a small indie studio from Türkiye making mobile games in Unity, and the editor tools we build along the way.">
+<link rel="apple-touch-icon" href="profile_picture.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cocoa: #4A2A1C;
+    --cocoa-deep: #2E1911;
+    --crema: #E9B04C;
+    --foam: #FBF7F2;
+    --mint: #8FD3BD;
+    --orange: #F07A1E;
+    --ink: #2A1A12;
+    --muted: #7A6258;
+    --line: #E7DCD3;
+    --surface: #FFFFFF;
+    --bg: var(--foam);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1E120C; --surface: #2A1911; --ink: #F5EDE6; --muted: #BFA89C; --line: #3D291F;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1E120C; --surface: #2A1911; --ink: #F5EDE6; --muted: #BFA89C; --line: #3D291F;
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 1.0625rem; line-height: 1.6;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--crema); outline-offset: 3px; border-radius: 4px; }
+  .wrap { width: min(1080px, 100% - 3rem); margin-inline: auto; }
+
+  /* Hero */
+  .hero { background: var(--cocoa); color: var(--foam); position: relative; overflow: hidden; }
+  .hero .wrap { padding: 4.5rem 0 5rem; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 2.5rem; align-items: center; position: relative; z-index: 1; }
+  .hero-logo { width: 100%; height: auto; max-width: 420px; justify-self: end; filter: drop-shadow(0 18px 30px rgba(20,8,3,.45)); }
+  .hero h1 {
+    font-family: "Fredoka", "Trebuchet MS", sans-serif; font-weight: 700;
+    font-size: clamp(3rem, 9vw, 6.5rem); line-height: .95; letter-spacing: -.01em;
+    margin: 0 0 1.5rem; max-width: 9ch; color: #FFE9C9;
+  }
+  .hero p { max-width: 38rem; font-size: 1.2rem; color: #F1E3D8; margin: 0; }
+  .ring {
+    position: absolute; right: -8rem; top: 50%; width: 30rem; height: 30rem; transform: translateY(-50%);
+    border-radius: 50%; border: 2.2rem solid var(--cocoa-deep); opacity: .55; pointer-events: none;
+  }
+  .ring::after {
+    content: ""; position: absolute; inset: 3.5rem; border-radius: 50%; border: .5rem dashed var(--crema); opacity: .35;
+  }
+
+  section { padding: 5rem 0; }
+  h2 { font-family: "Fredoka", "Trebuchet MS", sans-serif; font-weight: 700; font-size: clamp(1.6rem, 3.5vw, 2.3rem); letter-spacing: -.02em; margin: 0 0 1rem; }
+  .lead { color: var(--muted); max-width: 36rem; margin: 0 0 2.5rem; }
+
+  /* Tool feature */
+  .tool { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem; align-items: center; }
+  .tool h3 { font-family: "Fredoka", "Trebuchet MS", sans-serif; font-size: 1.5rem; margin: .25rem 0 .75rem; }
+  .status { display: inline-block; background: var(--orange); color: #FFFFFF; font-weight: 600; font-size: .85rem; padding: .25rem .7rem; border-radius: 999px; }
+  .tool ul { padding-left: 1.2rem; margin: 1.25rem 0 0; }
+  .tool li { margin-bottom: .45rem; }
+  .shot {
+    aspect-ratio: 4 / 3; border-radius: 14px; background: var(--surface); border: 2px dashed var(--line);
+    display: grid; place-items: center; color: var(--muted); text-align: center; padding: 1rem;
+  }
+
+  /* Games */
+  .games { background: var(--surface); border-block: 1px solid var(--line); }
+  .game-note { max-width: 40rem; }
+
+  /* Contact */
+  .contact { text-align: left; }
+  .mail {
+    display: inline-block; font-family: "Fredoka", "Trebuchet MS", sans-serif; font-weight: 700;
+    font-size: clamp(1.1rem, 3.4vw, 1.9rem); color: var(--ink); text-decoration-color: var(--crema);
+    text-decoration-thickness: .2em; text-underline-offset: .25em; word-break: break-word;
+  }
+  footer { padding: 2rem 0 3rem; color: var(--muted); font-size: .9rem; }
+
+  @media (max-width: 760px) {
+    .tool { grid-template-columns: 1fr; gap: 2rem; }
+    .ring { width: 18rem; height: 18rem; right: -9rem; top: 1rem; transform: none; border-width: 1.4rem; }
+    .hero-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .hero-logo { order: -1; justify-self: start; max-width: 260px; }
+    .hero .wrap { padding: 2.5rem 0 3.5rem; }
+    section { padding: 3.5rem 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="ring" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="hero-grid">
+    <div>
+    <h1>We make games.</h1>
+    <p>Hi, we're Mocha Games! A tiny studio from Türkiye making mobile games in Unity. Our tools are born from our own projects: whenever something slows us down, we build a fix, and the best ones end up on the Asset Store.</p>
+    </div>
+    <img class="hero-logo" src="logo.png" alt="Mocha Games logo: four kittens peeking out of a coffee cup" width="640" height="522">
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="tools">
+    <div class="wrap">
+      <h2>Tools</h2>
+      <p class="lead">Every tool we publish is something we use in our own production work first.</p>
+      <div class="tool">
+        <div>
+          <span class="status">Coming soon to the Unity Asset Store</span>
+          <h3>Asset Standardizer</h3>
+          <p>Turns messy imported model packs into a clean, consistent project. Point it at a folder of FBX files and textures, review the plan, and apply it in one go.</p>
+          <ul>
+            <li>Organizes models, textures, materials and prefabs into a folder layout you define</li>
+            <li>Detects PBR texture maps by their suffixes and applies the right import settings</li>
+            <li>Builds materials for URP Lit or your own custom shaders</li>
+            <li>Shows every change before anything is moved or created</li>
+          </ul>
+        </div>
+        <div class="shot">
+          <!-- Replace with: <img src="screenshot.png" alt="Asset Standardizer window showing a planned import"> -->
+          Screenshot coming soon
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="games" class="games">
+    <div class="wrap">
+      <h2>Games</h2>
+      <p class="game-note">We're currently working on our first mobile titles. Follow along and we'll share more as they take shape.</p>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>Say hello</h2>
+      <p class="lead">Questions, bug reports, feature requests or just a kind word. When you write to us, you're talking directly to the people who built the tool.</p>
+      <a class="mail" href="mailto:mochagamessupport@gmail.com">mochagamessupport@gmail.com</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Mocha Games</div>
+</footer>
+
+</body>
+</html>
